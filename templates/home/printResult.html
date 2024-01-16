@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Forecast Result</title>
+
+    <style>
+        /* Reset default margin and padding */
+        body, h1, h2, h3, h4, h5, h6, ul, ol, li, p, pre, blockquote, figure, hr, dl, dd {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Box sizing border-box */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Card styles */
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            padding: 10px 15px;
+            background-color: #f7f7f7;
+            border-bottom: 1px solid #ccc;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f7f7f7;
+            font-weight: bold;
+        }
+
+        /* Responsive styles */
+        @media print {
+            thead { display: table-header-group; }
+            .card-header { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 style="text-align: center">Result Forecast</h1>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table>
+                                <!-- Thead di luar table -->
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Close</th>
+                                        <th>Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Your loop to populate table rows -->
+                                    {% for item in value %}
+                                    <tr>
+                                        <td>{{ item.Date }}</td>
+                                        <td>{{ item.Close }}</td>
+                                        <td>{{ item.Result }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

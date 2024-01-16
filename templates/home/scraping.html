@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+    <div class="container-fluid px-4">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">Scraping Data</h1>
+                        <!-- Formulir Bootstrap -->
+                        <form method="post">
+
+                            <!-- Grup Formulir Bootstrap -->
+                            <div class="form-group mb-3">
+                                <label for="symbol">Symbol:</label>
+                                <input type="text" class="form-control" id="symbol" name="symbol" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="start_date">Start Date:</label>
+                                <input type="date" class="form-control" id="start_date" name="start_date" required>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="end_date">End Date:</label>
+                                <input type="date" class="form-control" id="end_date" name="end_date" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save Data</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

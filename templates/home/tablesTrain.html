@@ -1,0 +1,77 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} {{ request.endpoint.split('.')[-1].capitalize() }} {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
+            <div class="row">
+                <div class="btn-group mr-2">
+                    <button type="button" class="btn btn-primary dropdown-toggle me-md-2 mt-1"
+                            data-toggle="dropdown" aria-expanded="false">
+                        Action
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ url_for('scraping') }}">Scraping Data</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('upload') }}">Import CSV</a></li>
+                    </ul>
+                </div>
+                <form class="mr-2" method="post" action="{{ url_for('train') }}">
+                    <button class="btn btn-success me-md-2" type="submit">Pre-Processing</button>
+                </form>
+                <form class="mr-2" method="post" action="{{ url_for('deleteAllTrain') }}"
+                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus semua data?');">
+                    <button type="submit" class="btn btn-danger me-md-2">Delete All</button>
+                </form>
+            </div>
+        </div>
+        {#  table  #}
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card ">
+                    <div class="card-header">
+                        <h4 class="card-title"> Simple Table</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table tablesorter " id="example">
+                                <thead class=" text-primary">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Open</th>
+                                    <th>High</th>
+                                    <th>Low</th>
+                                    <th>Close</th>
+                                    <th>Adj Close</th>
+                                    <th>Volume</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in value %}
+                                    <tr>
+                                        <td>{{ item.Date }}</td>
+                                        <td>{{ item.Open }}</td>
+                                        <td>{{ item.High }}</td>
+                                        <td>{{ item.Low }}</td>
+                                        <td>{{ item.Close }}</td>
+                                        <td>{{ item.Adj }}</td>
+                                        <td>{{ item.Volume }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

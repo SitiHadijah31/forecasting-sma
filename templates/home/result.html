@@ -1,0 +1,133 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} {{ request.endpoint.split('.')[-1].capitalize() }} {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
+            <div class="row">
+                <a href="{{ url_for('cetakResult') }}" class="btn btn-primary mx-2">Print Result</a>
+                <form method="post" action="{{ url_for('deleteAllResult') }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus semua data?');">
+                    <button type="submit" class="btn btn-danger me-md-2">Delete All</button>
+                </form>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                    <div class="card ">
+                        <div class="card-header">
+                            <h4 class="card-title"> Simple Table</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                            <table class="table tablesorter " id="example">
+                                <thead class=" text-primary">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Close</th>
+                                    <th>Result</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in value %}
+                                <tr>
+                                    <td>{{ item.Date }}</td>
+                                    <td>{{ item.Close }}</td>
+                                    <td>{{ item.Result }}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-chart">
+                    <div class="card-header ">
+                        <i class="fas fa-chart-area me-1"></i>
+                        Chart Forecasting Result
+                    </div>
+                    <div class="card-body">
+                        <h2 class="ml-3">MAPE : {{ mape }}</h2>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        // Ambil data dari Flask dan gunakan untuk membuat grafik
+        const dates = {{ dates|tojson|safe }};
+        const closeValues = {{ close|tojson|safe }};
+        const resultValues = {{ result|tojson|safe }};
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+            labels: dates,
+            datasets: [{
+                    label: 'Close Values',
+                    data: closeValues,
+                    borderWidth: 1,
+                    borderColor: 'blue',
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)'
+                }, {
+                    label: 'Result Values',
+                    data: resultValues,
+                    borderWidth: 1,
+                    borderColor: 'red',
+                    backgroundColor: 'rgba(255, 0, 0, 0.2)'
+                }]
+            },
+            options: {
+                animation: {
+                    duration: 2000,  // Durasi animasi dalam milidetik
+                    easing: 'easeInOutQuart'  // Gaya animasi
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            maxRotation: 0,  // Rotasi label sumbu x
+                            autoSkip: true,
+                            maxTicksLimit: 8
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Javascript method's body can be found in assets/js/demos.js
+            demo.initDashboardPageCharts();
+        });
+    </script>
+
+{% endblock javascripts %}

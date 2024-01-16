@@ -1,0 +1,59 @@
+# create a SMA forecasting function and take the data from the test table which has date and close columns
+def forecastSMA():
+    data = data_test.query.all()
+    df = pd.DataFrame(data, columns=['Date', 'Close'])
+    df['Date'] = pd.to_datetime(df['Date'])
+    df.set_index('Date', inplace=True)
+    df.sort_index(inplace=True)
+    df['SMA'] = df['Close'].rolling(window=7).mean()
+    df['SMA'].plot(figsize=(12, 6), label='SMA')
+    plt.legend()
+    plt.show()
+    return render_template("/home/result.html/", value=df)
+
+ from database import db, data_train, data_test
+
+def forecast():
+    # Load data
+    data = data_train.query.all()
+    data = pd.DataFrame([(d.Date, d.Close) for d in data], columns=['Date', 'Close'])
+    data = data.set_index('Date')
+    data.index = pd.to_datetime(data.index)
+    data = data.sort_index()
+    data = data.Close
+
+    # Split data
+    train_data = data[:int(0.8*(len(data)))]
+    test_data = data[int(0.8*(len(data))):]
+
+    # Create model
+    model = ARIMA(train_data, order=(1, 1, 1))
+    fitted = model.fit(disp=-1)
+
+    # Forecast
+    fc, se, conf = fitted.forecast(10, alpha=0.05)
+    fc_series = pd.Series(fc, index=test_data.index)
+    lower_series = pd.Series(conf[:, 0], index=test_data.index)
+    upper_series = pd.Series(conf[:, 1], index=test_data.index)
+
+    # Save forecast to database
+    for index, row in fc_series.iteritems():
+        test_data = data_test(
+            Date=index,
+            Close=row
+        )
+        db.session.add(test_data)
+
+    db.session.commit()
+
+    # Plot
+    plt.figure(figsize=(12, 5), dpi=100)
+    plt.plot(train_data, label='training')
+    plt.plot(test_data, label='actual')
+    plt.plot(fc_series, label='forecast')
+    plt.fill_between(lower_series.index, lower_series, upper_series, color='k', alpha=.15)
+    plt.title('Forecast vs Actuals')
+    plt.legend(loc='upper left', fontsize=8)
+    plt.show()
+
+    return render_template("/home/result.html/")

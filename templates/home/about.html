@@ -1,0 +1,65 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Typography {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-user">
+                    <div class="card-body">
+                        <p class="card-text">
+                        <div class="author">
+                            <div class="block block-one"></div>
+                            <div class="block block-two"></div>
+                            <div class="block block-three"></div>
+                            <div class="block block-four"></div>
+                            <a href="javascript:void(0)">
+                                <img class="avatar" src="{{ url_for('static', filename='img/FS-LOGO.png') }}" alt="...">
+                                <h5 class="title">FORECASTING</h5>
+                            </a>
+                            <p class="description">
+                                SMA
+                            </p>
+                        </div>
+                        </p>
+                        <div class="card-description text-justify">
+                            Website Forecasting SMA (Simple Moving Average) ini bertujuan untuk memprediksi pergerakan harga saham dengan
+                            menggunakan data historis yang dikumpulkan dari berbagai sumber melalui teknik web scraping.
+                            Wesite dibuat dengan menggunakan Metode Simple Moving Average dalam analisis data.
+                            Data harga saham diperoleh dari platform situs resmi https://finance.yahoo.com/ melalui
+                            proses web scraping yang kami kembangkan. Kami berharap proyek ini akan memberikan wawasan
+                            yang berguna bagi investor untuk membuat keputusan yang lebih baik.
+                            Saat ini, kami sedang dalam tahap pengembangan dan analisis awal. Kami berencana untuk
+                            memperluas model peramalan kami dan menambahkan lebih banyak fitur analisis untuk
+                            meningkatkan ketepatan prediksi kami di masa mendatang.
+                            Terimakasih:)
+                            Jika ada kendala atau ada yang ditanyakan terkait website ini bisa menghubungi kami melalui platform tersebut.
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="button-container">
+                            <a href="https://facebook.com/profile.php?id=100077335012166" class="btn-icon btn-round ml-3">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="https://twitter.com/flyjewdan" class="btn-icon btn-round ml-3">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="mailto:jjehadij01@gmail.com" class="btn-icon btn-round ml-3">
+                                <i class="fab fa-google-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
